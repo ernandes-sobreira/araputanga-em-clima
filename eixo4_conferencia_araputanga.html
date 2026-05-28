@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eixo 4 — Conferência Municipal de Saúde · Araputanga-MT</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #1565a0;
+    --azul-claro: #2196f3;
+    --verde: #1a5c38;
+    --roxo: #6d28d9;
+    --ouro: #d97706;
+    --vermelho: #c0392b;
+    --fundo: #0a0f1a;
+    --branco: #f0f4ff;
+    --cinza: rgba(255,255,255,.55);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; font-family:'DM Sans',sans-serif; background:var(--fundo); color:var(--branco); overflow:hidden; }
+  .slide { display:none; position:absolute; inset:0; flex-direction:column; justify-content:center; align-items:center; padding:60px; text-align:center; }
+  .slide.active { display:flex; animation:fadeIn .5s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  nav { position:fixed; bottom:32px; left:50%; transform:translateX(-50%); display:flex; gap:12px; z-index:100; align-items:center; }
+  nav button { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:var(--branco); padding:10px 24px; border-radius:50px; cursor:pointer; font-size:15px; font-family:'DM Sans',sans-serif; font-weight:600; transition:all .2s; }
+  nav button:hover { background:rgba(255,255,255,.2); }
+  .slide-count { font-size:13px; color:var(--cinza); min-width:60px; text-align:center; }
+  .progress { position:fixed; top:0; left:0; height:3px; background:var(--azul-claro); transition:width .4s ease; z-index:200; }
+  .eixo-badge { font-size:12px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; padding:5px 14px; border-radius:20px; background:var(--azul); color:#fff; margin-bottom:20px; display:inline-block; }
+  h1.title { font-family:'Fraunces',serif; font-size:clamp(34px,5vw,68px); font-weight:900; line-height:1.05; margin-bottom:20px; }
+  h2.slide-title { font-family:'Fraunces',serif; font-size:clamp(26px,3.5vw,50px); font-weight:900; line-height:1.1; margin-bottom:16px; }
+  .sub { font-size:clamp(15px,2vw,20px); color:var(--cinza); line-height:1.6; max-width:720px; margin:0 auto; }
+  .accent { color:#60a5fa; }
+  .accent-red { color:#f87171; }
+  .accent-gold { color:#fbbf24; }
+  .accent-green { color:#34d399; }
+
+  .data-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; width:100%; max-width:900px; margin:24px auto 0; }
+  .data-card { background:rgba(255,255,255,.06); border-radius:16px; padding:18px 14px; border-top:3px solid var(--azul-claro); text-align:center; }
+  .data-card.red { border-top-color:#f87171; }
+  .data-card.green { border-top-color:#34d399; }
+  .data-card.gold { border-top-color:#fbbf24; }
+  .data-num { font-family:'Fraunces',serif; font-size:clamp(26px,3vw,42px); font-weight:900; line-height:1; }
+  .data-label { font-size:13px; color:var(--cinza); margin-top:6px; line-height:1.4; }
+  .data-src { font-size:11px; color:rgba(255,255,255,.3); margin-top:4px; }
+
+  .faixa { background:rgba(21,101,160,.2); border:1px solid rgba(33,150,243,.3); border-radius:16px; padding:18px 24px; max-width:800px; margin:18px auto 0; font-size:15px; line-height:1.7; }
+  .faixa.red { background:rgba(192,57,43,.2); border-color:rgba(248,113,113,.3); }
+  .faixa.green { background:rgba(26,92,56,.2); border-color:rgba(52,211,153,.3); }
+  .faixa.gold { background:rgba(217,119,6,.15); border-color:rgba(251,191,36,.3); }
+
+  .bullet-list { list-style:none; max-width:800px; margin:20px auto 0; display:flex; flex-direction:column; gap:10px; text-align:left; }
+  .bullet-list li { background:rgba(255,255,255,.05); border-radius:12px; padding:14px 18px; font-size:16px; line-height:1.5; display:flex; gap:12px; align-items:flex-start; }
+  .bullet-list li .icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+
+  .q-list { list-style:none; max-width:800px; margin:20px auto 0; display:flex; flex-direction:column; gap:12px; text-align:left; }
+  .q-list li { background:rgba(21,101,160,.15); border-left:4px solid var(--azul-claro); border-radius:0 12px 12px 0; padding:14px 18px; font-size:17px; line-height:1.55; }
+
+  .roteiro { display:grid; grid-template-columns:auto 1fr; gap:12px 20px; max-width:820px; margin:20px auto 0; text-align:left; }
+  .rot-time { font-family:'Fraunces',serif; font-size:22px; font-weight:900; color:#60a5fa; white-space:nowrap; padding-top:4px; }
+  .rot-desc { font-size:16px; line-height:1.6; color:var(--branco); padding:12px 16px; background:rgba(255,255,255,.05); border-radius:10px; }
+  .rot-desc strong { color:#60a5fa; }
+
+  /* COMPARATIVO ANTES/DEPOIS */
+  .compare { display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:880px; margin:20px auto 0; text-align:left; }
+  .compare-col { border-radius:16px; padding:20px; }
+  .compare-col.antes { background:rgba(192,57,43,.15); border:1px solid rgba(248,113,113,.25); }
+  .compare-col.depois { background:rgba(26,92,56,.15); border:1px solid rgba(52,211,153,.25); }
+  .compare-title { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:12px; }
+  .compare-col.antes .compare-title { color:#f87171; }
+  .compare-col.depois .compare-title { color:#34d399; }
+  .compare-item { font-size:14px; line-height:1.7; color:var(--cinza); padding:4px 0; border-bottom:1px solid rgba(255,255,255,.06); }
+  .compare-item:last-child { border-bottom:none; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- SLIDE 1: CAPA -->
+<div class="slide active" style="background:radial-gradient(ellipse at 30% 60%, #071a3a 0%, #0a0f1a 60%)">
+  <div class="eixo-badge">18ª Conferência Nacional de Saúde · Araputanga-MT</div>
+  <h1 class="title">Eixo 4<br><span class="accent">Modelos de Atenção e Gestão,</span><br>Territórios Integrados<br>e Cuidado Integral</h1>
+  <p class="sub">Como organizar o SUS de Araputanga para o presente e o futuro</p>
+  <div style="margin-top:32px;font-size:14px;color:rgba(255,255,255,.3)">Consultor técnico: Prof. Dr. Ernandes Sobreira Oliveira Junior · UNEMAT / PPGCA</div>
+</div>
+
+<!-- SLIDE 2: O QUE TEMOS HOJE -->
+<div class="slide" style="background:radial-gradient(ellipse at 70% 30%, #0a1a2a 0%, #0a0f1a 60%)">
+  <div class="eixo-badge">O SUS de Araputanga hoje</div>
+  <h2 class="slide-title">Onde estamos — <span class="accent">pontos fortes</span><br>e fragilidades reais</h2>
+  <div class="data-grid" style="max-width:920px">
+    <div class="data-card green">
+      <div class="data-num accent-green">100%</div>
+      <div class="data-label">cobertura de Atenção Primária</div>
+      <div class="data-src">Plano de Saúde 2026–2029</div>
+    </div>
+    <div class="data-card green">
+      <div class="data-num accent-green">11</div>
+      <div class="data-label">escolas a credenciar no PSE (meta 2029)</div>
+      <div class="data-src">Plano de Saúde 2026–2029</div>
+    </div>
+    <div class="data-card red">
+      <div class="data-num accent-red">55%</div>
+      <div class="data-label">conformidade estrutural do hospital</div>
+      <div class="data-src">Plano de Saúde 2026–2029</div>
+    </div>
+    <div class="data-card red">
+      <div class="data-num accent-red">63%</div>
+      <div class="data-label">hipertensos acompanhados (meta: 80%)</div>
+      <div class="data-src">Plano de Saúde 2026–2029</div>
+    </div>
+  </div>
+  <div class="faixa" style="margin-top:16px;font-size:14px">
+    💡 A cobertura de APS em 100% é uma conquista real. O gargalo está na <strong>qualidade e resolutividade</strong> — hospital precário, especialidades insuficientes, vigilância ainda em construção.
+  </div>
+</div>
+
+<!-- SLIDE 3: O QUE O EIXO 4 PEDE -->
+<div class="slide" style="background:radial-gradient(ellipse at 50% 70%, #1a0a2a 0%, #0a0f1a 60%)">
+  <div class="eixo-badge">O que a 18ª CNS propõe</div>
+  <h2 class="slide-title">A <span class="accent">ESF como coordenadora</span> do cuidado<br>— não só como porta de entrada</h2>
+  <p class="sub">O documento nacional é claro: a APS deve ser ordenadora das redes, não apenas triagem. Isso exige estrutura, financiamento e equipes multiprofissionais.</p>
+  <div class="compare" style="margin-top:24px">
+    <div class="compare-col antes">
+      <div class="compare-title">⚠️ Modelo atual (Araputanga)</div>
+      <div class="compare-item">UBS como porta de triagem</div>
+      <div class="compare-item">Especialidades escassas (0 → 6 previstas)</div>
+      <div class="compare-item">Hospital a 55% de conformidade</div>
+      <div class="compare-item">Sem Complexo Regulador estruturado</div>
+      <div class="compare-item">Vigilância ainda em implantação</div>
+    </div>
+    <div class="compare-col depois">
+      <div class="compare-title">✅ Modelo proposto (meta 2029)</div>
+      <div class="compare-item">ESF como coordenadora do cuidado</div>
+      <div class="compare-item">6 especialidades no SUS local</div>
+      <div class="compare-item">Hospital a 90% de conformidade</div>
+      <div class="compare-item">Complexo Regulador 100% estruturado</div>
+      <div class="compare-item">Vigilância integrada à atenção primária</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: POPULAÇÕES ESPECÍFICAS -->
+<div class="slide" style="background:radial-gradient(ellipse at 80% 20%, #0a1a0a 0%, #0a0f1a 70%)">
+  <div class="eixo-badge">Eixo 4 — Equidade e território</div>
+  <h2 class="slide-title">O SUS de Araputanga precisa<br>chegar em <span class="accent-gold">todos os territórios</span></h2>
+  <ul class="bullet-list">
+    <li><span class="icon">🌾</span><div><strong>Zona rural:</strong> comunidades distantes sem equipe itinerante. Meta 3.1.5 prevê 100% de cobertura APS — mas cobertura não é presença física regular no campo.</div></li>
+    <li><span class="icon">🏥</span><div><strong>Atenção especializada:</strong> Araputanga partia de ZERO especialistas no SUS. Meta 5.1.2: contratar 6 especialidades até 2026. Está sendo cumprida?</div></li>
+    <li><span class="icon">🧠</span><div><strong>Saúde mental:</strong> RAPS não aparece no Plano 2026–2029. O documento da 18ª CNS afirma que saúde mental é indissociável da atenção integral.</div></li>
+    <li><span class="icon">📋</span><div><strong>Farmácia Municipal:</strong> 0% de medicamentos disponíveis em 2025. Meta: 80% até 2026. Sem medicamentos, a APS não funciona como porta resolutiva.</div></li>
+  </ul>
+</div>
+
+<!-- SLIDE 5: GESTÃO E CONTROLE SOCIAL -->
+<div class="slide" style="background:radial-gradient(ellipse at 40% 40%, #1a1a0a 0%, #0a0f1a 70%)">
+  <div class="eixo-badge">Gestão, participação e controle social</div>
+  <h2 class="slide-title">O Conselho Municipal de Saúde<br>precisa de <span class="accent-gold">estrutura real</span></h2>
+  <p class="sub">O Eixo 4 defende que gestão pública forte e controle social efetivo são inseparáveis. O Plano 2026–2029 de Araputanga prevê isso na Diretriz 11.</p>
+  <div class="data-grid" style="max-width:820px;margin-top:20px">
+    <div class="data-card gold">
+      <div class="data-num accent-gold">0 → 4</div>
+      <div class="data-label">capacitações/ano para conselheiros</div>
+      <div class="data-src">Meta 11.1.1 — Plano 2026–2029</div>
+    </div>
+    <div class="data-card gold">
+      <div class="data-num accent-gold">100%</div>
+      <div class="data-label">das propostas da conferência encaminhadas</div>
+      <div class="data-src">Meta 11.1.6 — Plano 2026–2029</div>
+    </div>
+    <div class="data-card red">
+      <div class="data-num accent-red">0</div>
+      <div class="data-label">sede própria do CMS hoje</div>
+      <div class="data-src">Plano 2026–2029</div>
+    </div>
+    <div class="data-card red">
+      <div class="data-num accent-red">0</div>
+      <div class="data-label">servidores no CMS hoje</div>
+      <div class="data-src">Plano 2026–2029</div>
+    </div>
+  </div>
+  <div class="faixa gold" style="margin-top:16px;font-size:14px">
+    ⚠️ As propostas aprovadas <em>nesta conferência</em> só terão impacto real se o CMS tiver estrutura para acompanhar a implementação. Fortalecer o Conselho é uma proposta para votar hoje.
+  </div>
+</div>
+
+<!-- SLIDE 6: PROPOSTAS PARA ARAPUTANGA -->
+<div class="slide" style="background:radial-gradient(ellipse at 60% 50%, #071a3a 0%, #0a0f1a 70%)">
+  <div class="eixo-badge">Propostas para votação — Eixo 4</div>
+  <h2 class="slide-title">O que Araputanga pode <span class="accent">propor e votar</span><br>nesta conferência</h2>
+  <ul class="bullet-list" style="max-width:820px">
+    <li><span class="icon">1️⃣</span><div>Garantir que o <strong>hospital municipal atinja 90% de conformidade</strong> até 2029, com investimento específico em infraestrutura, equipamentos e humanização — conforme meta 5.1.1 do Plano.</div></li>
+    <li><span class="icon">2️⃣</span><div>Implantar <strong>equipes itinerantes para comunidades rurais</strong> distantes, garantindo que a cobertura APS de 100% seja presença real e não apenas cadastro no sistema.</div></li>
+    <li><span class="icon">3️⃣</span><div>Incluir <strong>saúde mental (RAPS) como linha de cuidado explícita</strong> no modelo de atenção municipal, com profissional de psicologia fixo na rede básica.</div></li>
+    <li><span class="icon">4️⃣</span><div>Fortalecer o <strong>Conselho Municipal de Saúde</strong> com sede, servidores e orçamento próprio — pré-condição para que as propostas desta conferência sejam monitoradas e cobradas.</div></li>
+  </ul>
+</div>
+
+<!-- SLIDE 7: QUESTÕES MOBILIZADORAS -->
+<div class="slide" style="background:radial-gradient(ellipse at 30% 70%, #0a1a0a 0%, #0a0f1a 70%)">
+  <div class="eixo-badge">Para o debate — Eixo 4</div>
+  <h2 class="slide-title"><span class="accent-gold">Questões mobilizadoras</span><br>para Araputanga</h2>
+  <ul class="q-list">
+    <li>Como garantir que a cobertura de 100% de APS em Araputanga signifique cuidado longitudinal real — e não apenas cadastro — especialmente na zona rural?</li>
+    <li>Como assegurar o papel do Estado na condução do SUS local, evitando terceirizações que fragmentam o cuidado e enfraquecem o controle social?</li>
+    <li>Como garantir os princípios do SUS — universalidade, integralidade e equidade — frente à crescente precarização do trabalho em saúde no município?</li>
+  </ul>
+</div>
+
+<!-- SLIDE 8: ROTEIRO DE 1H -->
+<div class="slide" style="background:radial-gradient(ellipse at 50% 50%, #0a0f1a 0%, #0a0f1a 100%)">
+  <div class="eixo-badge">Para o facilitador — Roteiro 1 hora</div>
+  <h2 class="slide-title" style="font-size:clamp(22px,3vw,38px)">Roteiro Eixo 4 · Conferência Municipal</h2>
+  <div class="roteiro">
+    <div class="rot-time">0–10'</div>
+    <div class="rot-desc"><strong>Abertura com dados:</strong> "O que é o SUS de Araputanga hoje?" Mostrar slide 2 — pontos fortes e fragilidades. Perguntar: "Quem já esperou por uma consulta especializada no SUS local?"</div>
+    <div class="rot-time">10–25'</div>
+    <div class="rot-desc"><strong>Exposição:</strong> O que o Eixo 4 da 18ª CNS propõe (slide 3). O comparativo antes/depois para Araputanga. Pontos críticos: hospital, RAPS, farmácia, zona rural, CMS.</div>
+    <div class="rot-time">25–45'</div>
+    <div class="rot-desc"><strong>Debate em grupos:</strong> Dividir por segmentos (trabalhadores, usuários, gestores). Cada grupo responde a uma questão mobilizadora (slide 7). 15' de discussão + 5' de relato.</div>
+    <div class="rot-time">45–55'</div>
+    <div class="rot-desc"><strong>Votação das propostas:</strong> Apresentar as 4 propostas do slide 6. Abrir para emendas rápidas. Votação formal. Registrar quem se responsabiliza por cada proposta.</div>
+    <div class="rot-time">55–60'</div>
+    <div class="rot-desc"><strong>Encerramento:</strong> Ler a frase de Hésio Cordeiro: "O SUS é uma política de Estado, não de governo." Reforçar: o que votamos hoje vai para o plano municipal.</div>
+  </div>
+</div>
+
+<nav>
+  <button onclick="prev()">← Anterior</button>
+  <span class="slide-count" id="counter">1 / 8</span>
+  <button onclick="next()">Próximo →</button>
+</nav>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function show(n) {
+  slides[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  document.getElementById('counter').textContent = (cur+1) + ' / ' + slides.length;
+  document.getElementById('progress').style.width = ((cur+1)/slides.length*100) + '%';
+}
+function next() { show(cur+1); }
+function prev() { show(cur-1); }
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight'||e.key===' ') next();
+  if(e.key==='ArrowLeft') prev();
+});
+document.getElementById('progress').style.width = (1/slides.length*100) + '%';
+</script>
+</body>
+</html>
