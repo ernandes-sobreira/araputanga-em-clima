@@ -255,6 +255,7 @@ function goTo(id){
     <button class="sn-link" onclick="goTo('sec-acoes')">Ações</button>
     <button class="sn-link" onclick="goTo('sec-plano')" style="color:#ff8c42;font-weight:700;border:1px solid rgba(255,140,66,.4)">Plano</button>
     <button class="sn-link" onclick="goTo('sec-eixos')" style="color:#60a5fa;font-weight:700;border:1px solid rgba(96,165,250,.4)">18ª CNS</button>
+    <button class="sn-link" onclick="goTo('sec-dashboard')" style="color:#34d399;font-weight:700;border:1px solid rgba(52,211,153,.4)">Dashboard</button>
   </div>
 </nav>
 
@@ -2714,7 +2715,48 @@ document.addEventListener('DOMContentLoaded', function(){
     </div>
 
   </div>
+</secti<!-- DASHBOARD REGIONAL -->
+<section id="sec-dashboard" style="background:linear-gradient(135deg,#0a1a2a,#071530);padding:80px 24px;">
+  <div class="secao" style="padding:0;">
+
+    <div class="secao-header reveal">
+      <span class="secao-tag" style="background:#1565a0;color:#fff">Dashboard Regional</span>
+      <h2 class="secao-titulo" style="color:#fff">Saúde, Clima &amp; Território</h2>
+      <p class="secao-desc" style="color:rgba(255,255,255,.6)">Painel regional com mapas, indicadores de alerta, saúde infantil, vacinação e contexto da RGI Mirassol d'Oeste</p>
+    </div>
+
+    <div class="chart-card reveal" style="background:rgba(255,255,255,.04);border:1px solid rgba(33,150,243,.3);margin-bottom:16px">
+      <div style="display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <h3 style="font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:10px">Painel Regional<br>Araputanga &amp; RGI Mirassol d'Oeste</h3>
+          <p style="font-size:14px;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:16px">Dashboard com mapa interativo dos municípios, painel de alerta (dengue, focos de calor, temperatura, desmatamento, cobertura ESF), indicadores sociais, de saúde, ambientais e econômicos, mortalidade infantil e cobertura vacinal.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+            <span style="background:rgba(33,150,243,.2);color:#60a5fa;font-size:12px;padding:4px 10px;border-radius:20px">Mapa regional</span>
+            <span style="background:rgba(33,150,243,.2);color:#60a5fa;font-size:12px;padding:4px 10px;border-radius:20px">Painel de alerta</span>
+            <span style="background:rgba(33,150,243,.2);color:#60a5fa;font-size:12px;padding:4px 10px;border-radius:20px">Mortalidade infantil</span>
+            <span style="background:rgba(33,150,243,.2);color:#60a5fa;font-size:12px;padding:4px 10px;border-radius:20px">Cobertura vacinal</span>
+            <span style="background:rgba(33,150,243,.2);color:#60a5fa;font-size:12px;padding:4px 10px;border-radius:20px">Municípios vizinhos</span>
+          </div>
+          <a href="dashboard_regional.html" target="_blank" style="display:inline-block;background:#1565a0;color:#fff;font-weight:700;font-size:15px;padding:12px 24px;border-radius:12px;text-decoration:none;transition:all .2s" onmouseenter="this.style.background='#0d4a7a'" onmouseleave="this.style.background='#1565a0'">
+            🗺️ Abrir Dashboard Regional →
+          </a>
+        </div>
+        <div style="flex:0 0 auto;display:flex;flex-direction:column;gap:8px;min-width:240px">
+          <div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Painéis disponíveis</div>
+          <div style="background:rgba(255,255,255,.05);border-radius:10px;padding:10px 14px;font-size:13px;color:rgba(255,255,255,.7)">🦟 Dengue 2024 — Araputanga</div>
+          <div style="background:rgba(255,255,255,.05);border-radius:10px;padding:10px 14px;font-size:13px;color:rgba(255,255,255,.7)">🔥 Focos de calor 2024</div>
+          <div style="background:rgba(255,255,255,.05);border-radius:10px;padding:10px 14px;font-size:13px;color:rgba(255,255,255,.7)">🌡️ Temperatura e clima</div>
+          <div style="background:rgba(255,255,255,.05);border-radius:10px;padding:10px 14px;font-size:13px;color:rgba(255,255,255,.7)">🌿 Desmatamento 2023</div>
+          <div style="background:rgba(255,255,255,.05);border-radius:10px;padding:10px 14px;font-size:13px;color:rgba(255,255,255,.7)">💉 Mortalidade infantil e vacinas</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
+
+
+on>
 
 
 ementById('ms-'+id);
