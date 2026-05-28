@@ -2755,11 +2755,17 @@ document.addEventListener('DOMContentLoaded', function(){
   </div>
 </section>
 
-
-on>
-
-
-ementById('ms-'+id);
+<script>
+// Restore meta statuses on load
+document.addEventListener('DOMContentLoaded', function(){
+  var icons = {ok:'✅', nao:'❌', parcial:'🔄'};
+  try {
+    var lastTab = localStorage.getItem('plano_tab');
+    if(lastTab) showPTab(parseInt(lastTab));
+    for(var k in localStorage){
+      if(k.startsWith('meta_')){
+        var id = k.replace('meta_','');
+        var el = document.getElementById('ms-'+id);
         if(el && icons[localStorage[k]]) el.textContent = icons[localStorage[k]];
       }
     }
